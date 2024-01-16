@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My library</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/backend/static/favicon.png">
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">My Library App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="add_book.html">Add Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="add_customer.html">Add Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="new_loan.html">New Loan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="return_book.html">Return Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="signup.html">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search_book.html">Search Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search_customer.html">Search Customer</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- press button to add default data to database -->
+    <button id="addDefaultDataBtn" class="btn btn-warning">Press to add Default Data</button>
+
+    <!-- logout button -->
+    <button type="button" onclick="logout()" class="btn btn-danger">Logout</button>
+
+    <h5 style="text-align: center;">Scroll down to see loans</h5>
+    <hr>
+
+
+    <!-- display books -->
+    <h2 style="text-align: center;">Our books</h2>
+    <div id="display_books"></div>
+    <hr>
+    <!-- display customers -->
+    <h2 style="text-align: center;">Our customers</h2>
+    <div id="display_customers"></div>
+    <hr>
+    <!-- display loans -->
+    <h2 style="text-align: center;">Loans</h2>
+    <div id="display_loans"></div>
+    <hr>
+    <!-- display late loans -->
+    <h2 style="text-align: center;">Late Loans</h2>
+    <div id="display_late_loans"></div>
+
+    <script>
+        // my server
+        const SERVER = 'http://127.0.0.1:5000'
+
+        // Get the access token from local storage
+        const accessToken = localStorage.getItem('access_token');
+
+        // Axios request headers with the access token
+        const headers = {
+            Authorization: `Bearer ${accessToken}`
+        };
+
+
+        // get data to display books
+        axios.get(`${SERVER}/getAllBooks`, { headers })
+            .then(res => display_books.innerHTML = res.data.map(book => `
+            <div> Book name: ${book.name},
+                 Author: ${book.author},
+                 Year published: ${book.year_published},
+                 Book type: ${book.type},
+                 <img src="${SERVER}/${book.picture}" alt="Book Cover" style="max-width: 200px; max-height: 200px;">
+                   </div>`).join(""))
+
+
+        // get data to display customers
+        axios.get(`${SERVER}/getAllCustomers`, { headers })
+            .then(res => display_customers.innerHTML = res.data.map(customer => `
+            <div> Customer name: ${customer.name},
+                 City: ${customer.city},
+                 Age: ${customer.age}
+                   </div>`).join(""))
+
+
+        // get data to display loans
+        axios.get(`${SERVER}/getAllLoans`, { headers })
+            .then(res => display_loans.innerHTML = res.data.map(loan => `
+            <div> Customer name: ${loan.customer_name},
+                 Book name: ${loan.book_name},
+                 Loan date: ${loan.loan_date},
+                 Return date: ${loan.return_date}
+                   </div>`).join(""))
+
+
+        // Get data to display late loans
+        axios.get(`${SERVER}/getAllLoans`, { headers })
+            .then(res => {
+                const lateLoans = res.data.filter(loan => {
+                    // Check if the loan is late (return_date is not null and current date is after return_date)
+                    return loan.return_date && new Date(loan.return_date) < new Date();
+                });
+
+                // Display late loans
+                display_late_loans.innerHTML = lateLoans.map(loan => `
+                    <div style="color: red;">
+                        Customer name: ${loan.customer_name},
+                        Book name: ${loan.book_name},
+                        Loan date: ${loan.loan_date},
+                        Return date: ${loan.return_date} (Late)
+                    </div>`).join("");
+            })
+            .catch(error => {
+                console.error("Error fetching late loans:", error);
+            });
+
+
+        // Add event listener to the add data button
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('addDefaultDataBtn').addEventListener('click', function () {
+                // Make request to the new route
+                axios.post(`${SERVER}/addDefaultData`, {}, { headers })
+                    .then(response => {
+                        console.log(response.data);
+
+                    })
+                    .catch(error => {
+                        console.error("Error adding default data:", error);
+                    });
+            });
+        });
+
+        // logout function
+        function logout() {
+            // Remove the access token from local storage
+            localStorage.removeItem('access_token');
+            // Redirect to the login page
+            window.location.href = 'login.html';
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

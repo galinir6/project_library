@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Search</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/backend/static/favicon.png">
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">My Library App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="add_book.html">Add Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="add_customer.html">Add Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="new_loan.html">New Loan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="return_book.html">Return Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="signup.html">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search_book.html">Search Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search_customer.html">Search Customer</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- type customer name to search -->
+    <h2 style="text-align: center;">Search Customers by Name</h2>
+    <form id="searchCustomerForm">
+        <div class="form-group">
+            <label for="customerName">Customer Name:</label>
+            <input type="text" class="form-control" id="customerName" name="name" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <!-- display customer found -->
+    <h2 style="text-align: center;">Search Results</h2>
+    <div id="searchResults"></div>
+
+    <script>
+        // my server
+        const SERVER = 'http://127.0.0.1:5000';
+
+
+        // Get the access token from local storage
+        const accessToken = localStorage.getItem('access_token');
+
+        // Axios request headers with the access token
+        const headers = {
+            Authorization: `Bearer ${accessToken}`
+        };
+
+        // get customer name from form
+        document.getElementById('searchCustomerForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const customerName = document.getElementById('customerName').value;
+            // get data from server
+            axios.get(`${SERVER}/searchCustomerByName?name=${customerName}`, { headers: { Authorization: `Bearer ${accessToken}` } })
+                .then(res => {
+                    document.getElementById('searchResults').innerHTML = res.data.map(customer => `
+                        <div>
+                            Customer name: ${customer.name},
+                            City: ${customer.city},
+                            Age: ${customer.age}
+                        </div>`).join("");
+                })
+                .catch(error => {
+                    console.error("Error searching for customers:", error);
+                });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

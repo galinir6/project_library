@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Book</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="/backend/static/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">My Library App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="add_book.html">Add Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="add_customer.html">Add Customer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="new_loan.html">New Loan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="return_book.html">Return Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="signup.html">Signup</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search_book.html">Search Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search_customer.html">Search Customer</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h1>Return Book</h1>
+    <!-- data to return book form -->
+    <form id="returnBookForm">
+        <label for="cust_name">Customer Name:</label>
+        <input type="text" id="cust_name" name="cust_name" required><br>
+        <label for="book_name">Book Name:</label>
+        <input type="text" id="book_name" name="book_name" required><br>
+        <button type="button" onclick="returnBook(event)">Return Book</button>
+    </form>
+
+    <script>
+        // my server
+        const SERVER = 'http://127.0.0.1:5000';
+        // return book function
+        function returnBook(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Get data from the form
+            const form = document.getElementById('returnBookForm');
+            const formData = new FormData(form);
+
+            // Post data to the server
+            axios.post(`${SERVER}/returnBook`, formData)
+                .then(response => {
+                    console.log(response.data);
+
+                    // Show success toast
+                    Toastify({
+                        text: "Book returned successfully!",
+                        backgroundColor: "green",
+                        duration: 3000,
+                    }).showToast();
+                })
+                .catch(error => {
+                    console.error('Error returning book:', error);
+                    // Show error toast
+                    Toastify({
+                        text: "Error returning book... Please try again.",
+                        backgroundColor: "red",
+                        duration: 3000,
+                    }).showToast();
+                });
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</body>
+
+</html>
