@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="icon" type="image/png" sizes="16x16" href="/backend/static/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 </head>
 
@@ -28,9 +29,6 @@
                     <a class="nav-link" href="add_book.html">Add Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="add_customer.html">Add Customer</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="new_loan.html">New Loan</a>
                 </li>
                 <li class="nav-item">
@@ -48,19 +46,28 @@
                 <li class="nav-item">
                     <a class="nav-link" href="search_customer.html">Search Customer</a>
                 </li>
+                <li class="nav-item">
+                    <!-- logout button -->
+                    <button type="button" onclick="logout()" class="btn btn-danger">Logout</button>
+                </li>
             </ul>
         </div>
     </nav>
-    <!-- press button to add default data to database -->
-    <button id="addDefaultDataBtn" class="btn btn-warning">Press to add Default Data</button>
 
-    <!-- logout button -->
-    <button type="button" onclick="logout()" class="btn btn-danger">Logout</button>
+    <!-- unit tests -->
+    <div>
+        <h3>Unit tests</h3>
+        <!-- Button to test sign up function -->
+        <button class="btn btn-primary" onclick="testsignup()">Test sign up function</button>
+        <!-- Button to test add Book function -->
+        <button class="btn btn-warning" onclick="testAddBook()">Test add book function</button>
+        <!-- Button to test new loan function -->
+        <button class="btn btn-success" onclick="testAddloan()">Test new loan function</button>
+    </div>
 
-    <h5 style="text-align: center;">Scroll down to see loans</h5>
     <hr>
 
-
+    <p style="text-align: center;">(You can see data only when logged in!)</p>
     <!-- display books -->
     <h2 style="text-align: center;">Our books</h2>
     <div id="display_books"></div>
@@ -76,7 +83,7 @@
     <!-- display late loans -->
     <h2 style="text-align: center;">Late Loans</h2>
     <div id="display_late_loans"></div>
-
+    <p style="text-align: center; color: red;">(Late loans will be displayed here)</p>
     <script>
         // my server
         const SERVER = 'http://127.0.0.1:5000'
@@ -141,22 +148,6 @@
                 console.error("Error fetching late loans:", error);
             });
 
-
-        // Add event listener to the add data button
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('addDefaultDataBtn').addEventListener('click', function () {
-                // Make request to the new route
-                axios.post(`${SERVER}/addDefaultData`, {}, { headers })
-                    .then(response => {
-                        console.log(response.data);
-
-                    })
-                    .catch(error => {
-                        console.error("Error adding default data:", error);
-                    });
-            });
-        });
-
         // logout function
         function logout() {
             // Remove the access token from local storage
@@ -164,10 +155,120 @@
             // Redirect to the login page
             window.location.href = 'login.html';
         }
+
+        // Test Add Book function
+        function testAddBook() {
+            // Test data
+            const testData = {
+                name: "harry potter",
+                author: "j.k.rowling",
+                year_published: 1997,
+                type: 1,  
+                picture: "static/uploads/harrypotter.jpg"
+            };
+
+            // Post test data to the server using the addBook function
+            axios.post(`${SERVER}/addBook`, convertFormData(testData), { headers })
+                .then(response => {
+                    console.log(response.data);
+                    // Show success toast
+                    Toastify({
+                        text: "New book added!",
+                        backgroundColor: "green",
+                        duration: 3000,
+                    }).showToast();
+                })
+                .catch(error => {
+                    console.error('Error adding book:', error);
+                    // Show error toast
+                    Toastify({
+                        text: "Error adding book. Please try again.",
+                        backgroundColor: "red",
+                        duration: 3000,
+                    }).showToast();
+                });
+        }
+
+
+        // Test new loan function
+        function testAddloan() {
+            // Test data
+            const testData = {
+                cust_name: "gali",
+                book_name: "harry potter"
+            };
+
+            // Post test data to the server using the addBook function
+            axios.post(`${SERVER}/loanBook`, convertFormData(testData), { headers })
+                .then(response => {
+                    console.log(response.data);
+                    // Show success toast
+                    Toastify({
+                        text: "New loan successfull!",
+                        backgroundColor: "green",
+                        duration: 3000,
+                    }).showToast();
+                })
+                .catch(error => {
+                    console.error('Error adding loan:', error);
+                    // Show error toast
+                    Toastify({
+                        text: "Error adding loan. Please try again.",
+                        backgroundColor: "red",
+                        duration: 3000,
+                    }).showToast();
+                });
+        }
+
+
+        // Test signup function
+        function testsignup() {
+            // Test data
+            const testData = {
+                name: "gali",
+                city: "mefalsim",
+                age: 21,
+                password: 123
+            };
+
+            // Post test data to the server using the addBook function
+            axios.post(`${SERVER}/signup`, convertFormData(testData))
+                .then(response => {
+                    console.log(response.data);
+                    // Show success toast
+                    Toastify({
+                        text: "new customer added!",
+                        backgroundColor: "green",
+                        duration: 3000,
+                    }).showToast();
+                })
+                .catch(error => {
+                    console.error('Error adding customer:', error);
+                    // Show error toast
+                    Toastify({
+                        text: "Error adding customer. Please try again.",
+                        backgroundColor: "red",
+                        duration: 3000,
+                    }).showToast();
+                });
+        }
+
+
+        // Helper function to convert test data to FormData (server is using request.formdata) 
+        function convertFormData(data) {
+            const formData = new FormData();
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+            return formData;
+        }
+
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 </body>
 
 </html>

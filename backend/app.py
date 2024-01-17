@@ -55,6 +55,7 @@ class Customers(db.Model):
     name = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
     age = db.Column(db.Integer)
+    password = db.Column(db.String(255), nullable=False)
 
 # create table for loans
 class Loans(db.Model):
@@ -68,40 +69,26 @@ class Loans(db.Model):
     customer = db.relationship('Customers', backref='loans')
     book = db.relationship('Books', backref='loans')
 
-# create table for users
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-
 
 # Create the database tables if dont exist
 with app.app_context():
     db.create_all()
 
-# adding new customer
-@app.route("/addCustomer" , methods=['POST'])
-def addCustomer():
-    if request.method == 'POST':
-        name = request.form['name']
-        city = request.form['city']
-        age = request.form['age']
-
-        new_customer = Customers(name=name, city=city, age=age)
-        db.session.add(new_customer)
-        db.session.commit()
-    return {"add": "done"}
 
 # adding new book
-@app.route("/addBook" , methods=['POST'])
+@app.route("/addBook", methods=['POST'])
+@jwt_required()
 def addBook():
+    print("Received form data:", request.form)
+    print("Received files:", request.files)
+
     if request.method == 'POST':
         name = request.form['name']
         author = request.form['author']
         year_published = request.form['year_published']
         type = request.form['type']
 
-         # Handle file upload
+        # Handle file upload
         picture = None
         if 'picture' in request.files:
             picture_file = request.files['picture']
@@ -110,14 +97,20 @@ def addBook():
                 picture_file.save(picture_path)
                 picture = picture_path
 
-            # Create a new book including the picture path
-            new_book = Books(name=name, author=author, year_published=year_published, type=type, picture=picture)
-            db.session.add(new_book)
-            db.session.commit()
+        # If picture is not provided, use a default picture URL
+        if picture is None:
+            picture = "static/uploads/harrypotter.jpg"
+
+        # Create a new book including the picture path
+        new_book = Books(name=name, author=author, year_published=year_published, type=type, picture=picture)
+        db.session.add(new_book)
+        db.session.commit()
+
     return {"add": "done"}
 
 # adding new loan
 @app.route("/loanBook", methods=['POST'])
+@jwt_required()
 def loanBook():
     if request.method == 'POST':
         cust_name = request.form['cust_name']
@@ -131,7 +124,7 @@ def loanBook():
             return jsonify({"error": "Customer or Book not found"}), 404
 
         # Check if the book is available for loan
-        if Loans.query.filter_by(book_id=book.id, return_date=None).first():
+        if Loans.query.filter_by(book_id=book.id).first():
             return jsonify({"error": "Book is already on loan"}), 400
 
         # Calculate the return date based on the book type
@@ -153,6 +146,7 @@ def loanBook():
 
 # returning a book
 @app.route("/returnBook", methods=['POST'])
+@jwt_required()
 def returnBook():
     if request.method == 'POST':
         cust_name = request.form['cust_name']
@@ -246,28 +240,30 @@ def getAllLoans():
 # adding new user 
 @app.route("/signup", methods=["POST"])
 def signup():
-    username = request.form.get("username")
+    name = request.form.get("name")
+    city = request.form.get("city")
+    age = request.form.get("age")
     password = request.form.get("password")
 
-    # Check if username already exists
-    existing_user = Users.query.filter_by(username=username).first()
-    if existing_user:
+    # Check if customer already exists
+    existing_customer = Customers.query.filter_by(name=name).first()
+    if existing_customer:
         return (
-            jsonify({"error": "Email already exists! Please choose a different one."}),
+            jsonify({"error": "Customer already exists! Please choose a different name."}),
             400,
         )
 
     # Hash the password before storing it
     hashed_pw = bcrypt.generate_password_hash(password).decode("utf-8")
 
-    # Add new user to the database
-    new_user = Users(username=username, password=hashed_pw)
-    db.session.add(new_user)
+    # Add new customer to the database
+    new_customer = Customers(name=name, city=city, age=age, password=hashed_pw)
+    db.session.add(new_customer)
     db.session.commit()
 
     return jsonify(
         {
-            "message": f"Successfully signed up! Welcome, {username}.",
+            "message": f"Successfully signed up! Welcome, {name}.",
             "redirect": "login.html",
         }
     )
@@ -275,50 +271,18 @@ def signup():
 # login and getting token
 @app.route("/login", methods=["POST"])
 def login():
-    username = request.form.get("username")
+    name = request.form.get("name")
     password = request.form.get("password")
 
-    # Check if the user exists
-    user = Users.query.filter_by(username=username).first()
+    # Check if the customer exists
+    customer = Customers.query.filter_by(name=name).first()
 
-    if user and bcrypt.check_password_hash(user.password, password):
+    if customer and bcrypt.check_password_hash(customer.password, password):
         # Generate access token
-        access_token = create_access_token(identity=username)
+        access_token = create_access_token(identity=name)
         return jsonify(access_token=access_token), 200
     else:
-        return jsonify({"error": "Invalid username or password"}), 401
-
-# adding data to the database with button
-@app.route("/addDefaultData", methods=['POST'])
-def addDefaultData():
-    # Check if the button was clicked
-    if request.method == 'POST':
-        # Add 2 books
-        default_book = Books(name='harry potter', author='j.k.rowling', year_published=1997, type=1 ,picture = "static/uploads/harrypotter.jpg")
-        default_book2 = Books(name='the hunger games', author='suzanne collins', year_published=2008, type=2 ,picture = "static/uploads/hungergames.jpg")
-        db.session.add(default_book)
-        db.session.add(default_book2)
-
-        # Add 2 customers
-        default_customer = Customers(name='gali', city='mefalsim', age=21)
-        default_customer2 = Customers(name='itay', city='tel aviv', age=40)
-        db.session.add(default_customer)
-        db.session.add(default_customer2)
-
-        # Add 2 loans , one of them is late
-        default_loan = Loans(cust_id=1, book_id=1, loan_date=datetime.datetime.now(),
-                             return_date=datetime.datetime.now() + timedelta(days=10))
-        default_loan2 = Loans(cust_id=2, book_id=2, loan_date=datetime.datetime.now(),
-                             return_date=datetime.datetime.now() - timedelta(days=1))
-        db.session.add(default_loan)
-        db.session.add(default_loan2)
-
-        # Commit changes to the database
-        db.session.commit()
-
-        return {"status": "Default data added successfully"}
-
-    return {"status": "No action performed"}
+        return jsonify({"error": "Invalid name or password"}), 401
 
 
 # search book by name

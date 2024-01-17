@@ -27,9 +27,6 @@
                     <a class="nav-link" href="add_book.html">Add Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="add_customer.html">Add Customer</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="new_loan.html">New Loan</a>
                 </li>
                 <li class="nav-item">
@@ -47,6 +44,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="search_customer.html">Search Customer</a>
                 </li>
+                <li class="nav-item">
+                    <!-- logout button -->
+                    <button type="button" onclick="logout()" class="btn btn-danger">Logout</button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -55,8 +56,12 @@
     <h1>Sign Up</h1>
     <!-- new user data form -->
     <form id="signupForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
         <button type="button" onclick="signup()">Sign Up</button>

@@ -28,9 +28,6 @@
                     <a class="nav-link" href="add_book.html">Add Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="add_customer.html">Add Customer</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="new_loan.html">New Loan</a>
                 </li>
                 <li class="nav-item">
@@ -47,6 +44,10 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="search_customer.html">Search Customer</a>
+                </li>
+                <li class="nav-item">
+                    <!-- logout button -->
+                    <button type="button" onclick="logout()" class="btn btn-danger">Logout</button>
                 </li>
             </ul>
         </div>
@@ -94,6 +95,12 @@
                 })
                 .catch(error => {
                     console.error("Error searching for customers:", error);
+                    // Show error toast
+                    Toastify({
+                        text: "Book was not found... Please try a different one.",
+                        backgroundColor: "red",
+                        duration: 3000,
+                    }).showToast();
                 });
         });
     </script>

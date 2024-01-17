@@ -27,9 +27,6 @@
                     <a class="nav-link" href="add_book.html">Add Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="add_customer.html">Add Customer</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="new_loan.html">New Loan</a>
                 </li>
                 <li class="nav-item">
@@ -47,6 +44,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="search_customer.html">Search Customer</a>
                 </li>
+                <li class="nav-item">
+                    <!-- logout button -->
+                    <button type="button" onclick="logout()" class="btn btn-danger">Logout</button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -56,8 +57,8 @@
     <h1>Login</h1>
     <!-- login data form -->
     <form id="loginForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+        <label for="name">Username:</label>
+        <input type="text" id="name" name="name" required><br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
         <button type="button" onclick="login()">Login</button>
@@ -66,12 +67,13 @@
     <script>
         // my server
         const SERVER = 'http://127.0.0.1:5000';
-        // login function
+        // Login function
         function login() {
-            // get data from form
+            // Get data from form
             const form = document.getElementById('loginForm');
             const formData = new FormData(form);
-            // post data to server
+
+            // Post data to server
             axios.post(`${SERVER}/login`, formData)
                 .then(response => {
                     const { access_token } = response.data;
@@ -80,7 +82,7 @@
                         localStorage.setItem('access_token', access_token);
                         // Show success toast
                         Toastify({
-                            text: "Login successfull!",
+                            text: "Login successful!",
                             backgroundColor: "green",
                             duration: 3000,
                         }).showToast();
@@ -98,6 +100,7 @@
                     }).showToast();
                 });
         }
+
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>

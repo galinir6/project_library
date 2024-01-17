@@ -1,21 +1,57 @@
-# Welcome to my library app
-## using flask , sqlite database , sqlalchemy
-## App functions:
-- add book
-- add customer
-- make new loan
-- return book
-- sign up
-- login
-- search book by name
-- search customer by name
-- display all data 
-## to use app:
-- create new env and activate it
-- install requirements.txt
-- cd backend in terminal, make sure you are in the right folder
-- run server with py app.py in terminal
-- open index.html in default browser
-- go to sign up and create new account
-- login to account to get token and authorization
-- press add data button in home page to add data to database
+# Library Management System
+
+This is my Library Management System implemented using Flask, SQLAlchemy, and JWT for authentication , with html and js connecting to the server with axios. The system allows users to manage books, customers and loans.
+
+## Features
+
+1. **Add Book:**
+   - Add a new book to the library database. Supports uploading a book picture.
+
+2. **Loan Book:**
+   - Loan a book to a customer. Calculates the return date based on the book type.
+
+3. **Return Book:**
+   - Return a previously loaned book. removes the book loan from loans table.
+
+4. **Get All data:**
+   - Retrieve all books , users/customers , and loans from the library database , and display in html.
+
+5. **Search Book by Name:**
+   - Search for books by name.
+
+6. **Search Customer by Name:**
+   - Search for customers by name.
+
+7. **User/customer Registration:**
+   - Register a new customer account.
+
+8. **User/customer Login/Logout:**
+    - Log in to the system and obtain a JWT token.
+    - Log out by removing token from storage.
+
+## How to Use
+
+1. **create and activate vitualenv:**
+   - create and activate vitualenv to make sure you will only have the correct packages.
+
+2. **Installation:**
+   - Clone this repository.
+   - Install dependencies: `pip install -r requirements.txt`.
+
+3. **Run the Application:**
+   - cd backend in terminal, make sure you are in the right folder.
+   - Run `py app.py` in terminal to run server.
+
+4. **use app:**
+   - open `index.html` in default browser.
+   - make sure to sign up and log in first to get token and use the app functions.
+   - if you use the `sign up` unit test, log in with username: gali , and password:123
+
+5. **after log in:**
+   - after logging in you can use the unit tests to quickly add data.
+   - or add data manually with the app functions. 
+
+
+
+
+

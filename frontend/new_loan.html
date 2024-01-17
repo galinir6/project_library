@@ -28,9 +28,6 @@
                     <a class="nav-link" href="add_book.html">Add Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="add_customer.html">Add Customer</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="new_loan.html">New Loan</a>
                 </li>
                 <li class="nav-item">
@@ -48,6 +45,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="search_customer.html">Search Customer</a>
                 </li>
+                <li class="nav-item">
+                    <!-- logout button -->
+                    <button type="button" onclick="logout()" class="btn btn-danger">Logout</button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -64,6 +65,16 @@
     <script>
         // my server
         const SERVER = 'http://127.0.0.1:5000';
+
+        // Get the access token from local storage
+        const accessToken = localStorage.getItem('access_token');
+
+        // Axios request headers with the access token
+        const headers = {
+            Authorization: `Bearer ${accessToken}`
+        };
+
+
         // loan book function
         function loanBook(event) {
             // Prevent the default form submission
@@ -74,7 +85,7 @@
             const formData = new FormData(form);
 
             // post data to server
-            axios.post(`${SERVER}/loanBook`, formData)
+            axios.post(`${SERVER}/loanBook`, formData , { headers })
                 .then(response => {
                     console.log(response.data);
                     // Show success toast
@@ -88,7 +99,7 @@
                     console.error('Error loaning book:', error);
                     // Show error toast
                     Toastify({
-                        text: "Error loaning book... Please try again.",
+                        text: "Book already on loan or does not exist... Please try a different one.",
                         backgroundColor: "red",
                         duration: 3000,
                     }).showToast();
