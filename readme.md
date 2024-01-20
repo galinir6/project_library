@@ -40,6 +40,7 @@ This is my Library Management System implemented using Flask, SQLAlchemy, and JW
 
 2. **Installation:**
    - Clone this repository.
+   - cd project_library in terminal.
    - Install dependencies: `pip install -r requirements.txt`.
 
 3. **Run the Application:**
