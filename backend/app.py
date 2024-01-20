@@ -14,7 +14,6 @@ import datetime
 from werkzeug.utils import secure_filename
 import os
 
-
 app = Flask(__name__)
 app = Flask(__name__, static_url_path='/static')
 
@@ -69,7 +68,6 @@ class Loans(db.Model):
     customer = db.relationship('Customers', backref='loans')
     book = db.relationship('Books', backref='loans')
 
-
 # Create the database tables if dont exist
 with app.app_context():
     db.create_all()
@@ -79,9 +77,6 @@ with app.app_context():
 @app.route("/addBook", methods=['POST'])
 @jwt_required()
 def addBook():
-    print("Received form data:", request.form)
-    print("Received files:", request.files)
-
     if request.method == 'POST':
         name = request.form['name']
         author = request.form['author']
@@ -107,6 +102,7 @@ def addBook():
         db.session.commit()
 
     return {"add": "done"}
+
 
 # adding new loan
 @app.route("/loanBook", methods=['POST'])
@@ -144,6 +140,7 @@ def loanBook():
 
         return {"loan_status": "success", "return_date": return_date.strftime("%Y-%m-%d")}
 
+
 # returning a book
 @app.route("/returnBook", methods=['POST'])
 @jwt_required()
@@ -175,6 +172,7 @@ def returnBook():
 
         return {"return_status": "success"}
 
+
 # getting all data from books table
 @app.route("/getAllBooks", methods=['GET'])
 @jwt_required()
@@ -195,6 +193,7 @@ def getAllBooks():
 
     return jsonify(books_data)
 
+
 # getting all data from customres table
 @app.route("/getAllCustomers", methods=['GET'])
 @jwt_required()
@@ -213,6 +212,7 @@ def getAllCustomers():
         })
 
     return jsonify(customers_data)
+
 
 # getting all data from loans table
 @app.route("/getAllLoans", methods=['GET'])
@@ -236,6 +236,7 @@ def getAllLoans():
         })
 
     return jsonify(loans_data)
+
 
 # adding new user 
 @app.route("/signup", methods=["POST"])
@@ -267,6 +268,7 @@ def signup():
             "redirect": "login.html",
         }
     )
+
 
 # login and getting token
 @app.route("/login", methods=["POST"])
@@ -337,6 +339,36 @@ def searchCustomerByName():
         })
 
     return jsonify(customers_data)
+
+
+# function to get loans of customer that is logged in
+@app.route("/customerLoanHistory", methods=['GET'])
+@jwt_required()
+def customerLoanHistory():
+    # Get the customer's identity from the JWT token
+    customer_identity = get_jwt_identity()
+
+    # Find the customer in the database
+    customer = Customers.query.filter_by(name=customer_identity).first()
+    if not customer:
+        return jsonify({"error": "Customer not found"}), 404
+
+    # Query for loans associated with the customer
+    customer_loans = Loans.query.filter_by(cust_id=customer.id).all()
+
+    # Prepare the response data
+    loans_history = []
+    for loan in customer_loans:
+        book = Books.query.get(loan.book_id)
+        loans_history.append({
+            'loan_id': loan.id,
+            'book_name': book.name,
+            'loan_date': loan.loan_date.strftime("%Y-%m-%d"),
+            'return_date': loan.return_date.strftime("%Y-%m-%d") if loan.return_date else None
+        })
+
+    return jsonify(loans_history)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

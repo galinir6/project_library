@@ -45,6 +45,9 @@
                     <a class="nav-link" href="search_customer.html">Search Customer</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="customer_loans.html">Customer loans</a>
+                </li>
+                <li class="nav-item">
                     <!-- logout button -->
                     <button type="button" onclick="logout()" class="btn btn-danger">Logout</button>
                 </li>
@@ -101,6 +104,14 @@
                 });
         }
 
+
+        // logout function
+        function logout() {
+            // Remove the access token from local storage
+            localStorage.removeItem('access_token');
+            // Redirect to the login page
+            window.location.href = 'login.html';
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>

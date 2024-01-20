@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module app</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title">app</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cgalin%5Conedrive%5C%D7%A9%D7%95%D7%9C%D7%97%D7%9F%20%D7%94%D7%A2%D7%91%D7%95%D7%93%D7%94%5Cjohnbryce%5Cpython%5Cp29_project%5Cbackend%5Capp.py">c:\users\galin\onedrive\שולחן העבודה\johnbryce\python\p29_project\backend\app.py</a></td></tr></table>
+    <p></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="datetime.html">datetime</a><br>
+</td><td class="multicolumn"><a href="os.html">os</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text">sqlalchemy.orm.decl_api.Model(<a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>)
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="app.html#Books">Books</a>
+</dt><dt class="heading-text"><a href="app.html#Customers">Customers</a>
+</dt><dt class="heading-text"><a href="app.html#Loans">Loans</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Books">class <strong>Books</strong></a>(sqlalchemy.orm.decl_api.Model)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Books">Books</a>(**kwargs)<br>
+&nbsp;<br>
+#&nbsp;create&nbsp;table&nbsp;for&nbsp;books<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="app.html#Books">Books</a></dd>
+<dd>sqlalchemy.orm.decl_api.Model</dd>
+<dd><a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Books-__init__"><strong>__init__</strong></a>(self, **kwargs)</dt><dd><span class="code">A&nbsp;simple&nbsp;constructor&nbsp;that&nbsp;allows&nbsp;initialization&nbsp;from&nbsp;kwargs.<br>
+&nbsp;<br>
+Sets&nbsp;attributes&nbsp;on&nbsp;the&nbsp;constructed&nbsp;instance&nbsp;using&nbsp;the&nbsp;names&nbsp;and<br>
+values&nbsp;in&nbsp;``kwargs``.<br>
+&nbsp;<br>
+Only&nbsp;keys&nbsp;that&nbsp;are&nbsp;present&nbsp;as<br>
+attributes&nbsp;of&nbsp;the&nbsp;instance's&nbsp;class&nbsp;are&nbsp;allowed.&nbsp;These&nbsp;could&nbsp;be,<br>
+for&nbsp;example,&nbsp;any&nbsp;mapped&nbsp;columns&nbsp;or&nbsp;relationships.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>author</strong></dt>
+</dl>
+<dl><dt><strong>id</strong></dt>
+</dl>
+<dl><dt><strong>name</strong></dt>
+</dl>
+<dl><dt><strong>picture</strong></dt>
+</dl>
+<dl><dt><strong>type</strong></dt>
+</dl>
+<dl><dt><strong>year_published</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x27fbae42cc0; Books&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('books', MetaData(), Column('id', Integer(... String(length=255), table=&lt;books&gt;), schema=None)</dl>
+
+<dl><dt><strong>__tablename__</strong> = 'books'</dl>
+
+<hr>
+Methods inherited from sqlalchemy.orm.decl_api.Model:<br>
+<dl><dt><strong>query</strong></dt>
+</dl>
+
+<hr>
+Data and other attributes inherited from sqlalchemy.orm.decl_api.Model:<br>
+<dl><dt><strong>__abstract__</strong> = True</dl>
+
+<dl><dt><strong>__fsa__</strong> = &lt;SQLAlchemy&gt;</dl>
+
+<dl><dt><strong>metadata</strong> = MetaData()</dl>
+
+<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.query.Query'&gt;<dd><span class="code">SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;some&nbsp;extra&nbsp;methods<br>
+useful&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;default&nbsp;query&nbsp;class&nbsp;for&nbsp;:attr:`.Model.query`.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;3.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Renamed&nbsp;to&nbsp;``Query``&nbsp;from&nbsp;``BaseQuery``.</span></dl>
+
+<dl><dt><strong>registry</strong> = &lt;sqlalchemy.orm.decl_api.registry object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><a name="Books-__repr__"><strong>__repr__</strong></a>(self) -&gt; 'str'</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><strong>__annotations__</strong> = {'__fsa__': 't.ClassVar[SQLAlchemy]', 'query': 't.ClassVar[Query]', 'query_class': 't.ClassVar[type[Query]]'}</dl>
+
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Customers">class <strong>Customers</strong></a>(sqlalchemy.orm.decl_api.Model)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Customers">Customers</a>(**kwargs)<br>
+&nbsp;<br>
+#&nbsp;create&nbsp;table&nbsp;for&nbsp;customers<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="app.html#Customers">Customers</a></dd>
+<dd>sqlalchemy.orm.decl_api.Model</dd>
+<dd><a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Customers-__init__"><strong>__init__</strong></a>(self, **kwargs)</dt><dd><span class="code">A&nbsp;simple&nbsp;constructor&nbsp;that&nbsp;allows&nbsp;initialization&nbsp;from&nbsp;kwargs.<br>
+&nbsp;<br>
+Sets&nbsp;attributes&nbsp;on&nbsp;the&nbsp;constructed&nbsp;instance&nbsp;using&nbsp;the&nbsp;names&nbsp;and<br>
+values&nbsp;in&nbsp;``kwargs``.<br>
+&nbsp;<br>
+Only&nbsp;keys&nbsp;that&nbsp;are&nbsp;present&nbsp;as<br>
+attributes&nbsp;of&nbsp;the&nbsp;instance's&nbsp;class&nbsp;are&nbsp;allowed.&nbsp;These&nbsp;could&nbsp;be,<br>
+for&nbsp;example,&nbsp;any&nbsp;mapped&nbsp;columns&nbsp;or&nbsp;relationships.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>age</strong></dt>
+</dl>
+<dl><dt><strong>city</strong></dt>
+</dl>
+<dl><dt><strong>id</strong></dt>
+</dl>
+<dl><dt><strong>name</strong></dt>
+</dl>
+<dl><dt><strong>password</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x27fbc936900; Customers&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('customers', MetaData(), Column('id', Inte... table=&lt;customers&gt;, nullable=False), schema=None)</dl>
+
+<dl><dt><strong>__tablename__</strong> = 'customers'</dl>
+
+<hr>
+Methods inherited from sqlalchemy.orm.decl_api.Model:<br>
+<dl><dt><strong>query</strong></dt>
+</dl>
+
+<hr>
+Data and other attributes inherited from sqlalchemy.orm.decl_api.Model:<br>
+<dl><dt><strong>__abstract__</strong> = True</dl>
+
+<dl><dt><strong>__fsa__</strong> = &lt;SQLAlchemy&gt;</dl>
+
+<dl><dt><strong>metadata</strong> = MetaData()</dl>
+
+<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.query.Query'&gt;<dd><span class="code">SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;some&nbsp;extra&nbsp;methods<br>
+useful&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;default&nbsp;query&nbsp;class&nbsp;for&nbsp;:attr:`.Model.query`.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;3.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Renamed&nbsp;to&nbsp;``Query``&nbsp;from&nbsp;``BaseQuery``.</span></dl>
+
+<dl><dt><strong>registry</strong> = &lt;sqlalchemy.orm.decl_api.registry object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><a name="Customers-__repr__"><strong>__repr__</strong></a>(self) -&gt; 'str'</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><strong>__annotations__</strong> = {'__fsa__': 't.ClassVar[SQLAlchemy]', 'query': 't.ClassVar[Query]', 'query_class': 't.ClassVar[type[Query]]'}</dl>
+
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Loans">class <strong>Loans</strong></a>(sqlalchemy.orm.decl_api.Model)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Loans">Loans</a>(**kwargs)<br>
+&nbsp;<br>
+#&nbsp;create&nbsp;table&nbsp;for&nbsp;loans<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="app.html#Loans">Loans</a></dd>
+<dd>sqlalchemy.orm.decl_api.Model</dd>
+<dd><a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Loans-__init__"><strong>__init__</strong></a>(self, **kwargs)</dt><dd><span class="code">A&nbsp;simple&nbsp;constructor&nbsp;that&nbsp;allows&nbsp;initialization&nbsp;from&nbsp;kwargs.<br>
+&nbsp;<br>
+Sets&nbsp;attributes&nbsp;on&nbsp;the&nbsp;constructed&nbsp;instance&nbsp;using&nbsp;the&nbsp;names&nbsp;and<br>
+values&nbsp;in&nbsp;``kwargs``.<br>
+&nbsp;<br>
+Only&nbsp;keys&nbsp;that&nbsp;are&nbsp;present&nbsp;as<br>
+attributes&nbsp;of&nbsp;the&nbsp;instance's&nbsp;class&nbsp;are&nbsp;allowed.&nbsp;These&nbsp;could&nbsp;be,<br>
+for&nbsp;example,&nbsp;any&nbsp;mapped&nbsp;columns&nbsp;or&nbsp;relationships.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>book</strong></dt>
+</dl>
+<dl><dt><strong>book_id</strong></dt>
+</dl>
+<dl><dt><strong>cust_id</strong></dt>
+</dl>
+<dl><dt><strong>customer</strong></dt>
+</dl>
+<dl><dt><strong>id</strong></dt>
+</dl>
+<dl><dt><strong>loan_date</strong></dt>
+</dl>
+<dl><dt><strong>return_date</strong></dt>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__mapper__</strong> = &lt;Mapper at 0x27fbc936a50; Loans&gt;</dl>
+
+<dl><dt><strong>__table__</strong> = Table('loans', MetaData(), Column('id', Integer(...eturn_date', Date(), table=&lt;loans&gt;), schema=None)</dl>
+
+<dl><dt><strong>__tablename__</strong> = 'loans'</dl>
+
+<hr>
+Methods inherited from sqlalchemy.orm.decl_api.Model:<br>
+<dl><dt><strong>query</strong></dt>
+</dl>
+
+<hr>
+Data and other attributes inherited from sqlalchemy.orm.decl_api.Model:<br>
+<dl><dt><strong>__abstract__</strong> = True</dl>
+
+<dl><dt><strong>__fsa__</strong> = &lt;SQLAlchemy&gt;</dl>
+
+<dl><dt><strong>metadata</strong> = MetaData()</dl>
+
+<dl><dt><strong>query_class</strong> = &lt;class 'flask_sqlalchemy.query.Query'&gt;<dd><span class="code">SQLAlchemy&nbsp;:class:`~sqlalchemy.orm.query.Query`&nbsp;subclass&nbsp;with&nbsp;some&nbsp;extra&nbsp;methods<br>
+useful&nbsp;for&nbsp;querying&nbsp;in&nbsp;a&nbsp;web&nbsp;application.<br>
+&nbsp;<br>
+This&nbsp;is&nbsp;the&nbsp;default&nbsp;query&nbsp;class&nbsp;for&nbsp;:attr:`.Model.query`.<br>
+&nbsp;<br>
+..&nbsp;versionchanged::&nbsp;3.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Renamed&nbsp;to&nbsp;``Query``&nbsp;from&nbsp;``BaseQuery``.</span></dl>
+
+<dl><dt><strong>registry</strong> = &lt;sqlalchemy.orm.decl_api.registry object&gt;</dl>
+
+<hr>
+Methods inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><a name="Loans-__repr__"><strong>__repr__</strong></a>(self) -&gt; 'str'</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes inherited from <a href="flask_sqlalchemy.model.html#Model">flask_sqlalchemy.model.Model</a>:<br>
+<dl><dt><strong>__annotations__</strong> = {'__fsa__': 't.ClassVar[SQLAlchemy]', 'query': 't.ClassVar[Query]', 'query_class': 't.ClassVar[type[Query]]'}</dl>
+
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-addBook"><strong>addBook</strong></a>()</dt></dl>
+ <dl><dt><a name="-customerLoanHistory"><strong>customerLoanHistory</strong></a>()</dt></dl>
+ <dl><dt><a name="-getAllBooks"><strong>getAllBooks</strong></a>()</dt></dl>
+ <dl><dt><a name="-getAllCustomers"><strong>getAllCustomers</strong></a>()</dt></dl>
+ <dl><dt><a name="-getAllLoans"><strong>getAllLoans</strong></a>()</dt></dl>
+ <dl><dt><a name="-loanBook"><strong>loanBook</strong></a>()</dt></dl>
+ <dl><dt><a name="-login"><strong>login</strong></a>()</dt><dd><span class="code">#&nbsp;login&nbsp;and&nbsp;getting&nbsp;token</span></dd></dl>
+ <dl><dt><a name="-returnBook"><strong>returnBook</strong></a>()</dt></dl>
+ <dl><dt><a name="-searchBookByName"><strong>searchBookByName</strong></a>()</dt></dl>
+ <dl><dt><a name="-searchCustomerByName"><strong>searchCustomerByName</strong></a>()</dt></dl>
+ <dl><dt><a name="-signup"><strong>signup</strong></a>()</dt><dd><span class="code">#&nbsp;adding&nbsp;new&nbsp;user</span></dd></dl>
+</td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>app</strong> = &lt;Flask 'app'&gt;<br>
+<strong>bcrypt</strong> = &lt;flask_bcrypt.Bcrypt object&gt;<br>
+<strong>db</strong> = &lt;SQLAlchemy&gt;<br>
+<strong>jwt</strong> = &lt;flask_jwt_extended.jwt_manager.JWTManager object&gt;<br>
+<strong>request</strong> = &lt;LocalProxy unbound&gt;</td></tr></table>
+</body></html>
