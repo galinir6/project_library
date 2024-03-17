@@ -194,6 +194,30 @@ def getAllBooks():
     return jsonify(books_data)
 
 
+
+# getting all data from books table (FOR RENDER)
+@app.route("/", methods=['GET'])
+@jwt_required()
+def get_render():
+    # get all books from the database
+    all_books = Books.query.all()
+
+    # Prepare the response data
+    books_data = []
+    for book in all_books:
+        books_data.append({
+            'id': book.id,
+            'name': book.name,
+            'author': book.author,
+            'year_published': book.year_published,
+            'type': book.type,
+            'picture': book.picture})
+
+    return jsonify(books_data)
+
+
+
+
 # getting all data from customres table
 @app.route("/getAllCustomers", methods=['GET'])
 @jwt_required()
