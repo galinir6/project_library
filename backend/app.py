@@ -197,7 +197,6 @@ def getAllBooks():
 
 # getting all data from books table (FOR RENDER)
 @app.route("/", methods=['GET'])
-@jwt_required()
 def get_render():
     # get all books from the database
     all_books = Books.query.all()
